@@ -1,0 +1,21 @@
+# Project
+*-log.txt
+*-pid.txt
+*-config.json
+
+# Editors
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Miscellaneous
+node_modules
+dist
+dist-ssr
+*.local

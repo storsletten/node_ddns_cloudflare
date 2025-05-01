@@ -1,0 +1,28 @@
+{
+ "name": "node_ddns_cloudflare",
+ "version": "1.0.0",
+ "description": "Performs IP address monitoring and DNS record updating on Cloudflare",
+ "author": "Martin Storsletten",
+ "license": "GPL-3.0-or-later",
+ "keywords": [
+  "ddns",
+  "cloudflare"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/storsletten/ddns_cloudflare.git"
+ },
+ "bugs": {
+  "url": "https://github.com/storsletten/ddns_cloudflare/issues"
+ },
+ "homepage": "https://github.com/storsletten/ddns_cloudflare#readme",
+ "scripts": {
+  "dry": "node . dry",
+  "start": "node ."
+ },
+ "engines": {
+  "node": ">=22.0.0"
+ },
+ "type": "module",
+ "main": "src/main.mjs"
+}
