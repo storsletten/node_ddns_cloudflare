@@ -18,7 +18,7 @@ Open the project folder in a command line window and type:
 npm start
 ```
 
-Alternatively, on Windows, you can run the helper script called start-hidden-win.vbs. It will run the app in the background using a completely hidden console window.
+Alternatively, on Windows, you can run the helper script called win-start-hidden.vbs. It will run the app in the background using a completely hidden console window.
 
 You can also perform a dry-run by typing "npm run dry" or "node . dry" in a command line window in the project folder.
 A dry run means the app will not make any modifications to DNS records.
@@ -35,9 +35,9 @@ Or to do a dry-run with a specific instance name:
 node . dry name=home
 ```
 
-The helper script start-hidden-win.vbs can also forward these same arguments, like this:
+The helper script win-start-hidden.vbs can also forward these same arguments, like this:
 ```sh
-start-hidden-win.vbs name=home
+win-start-hidden.vbs name=home
 ```
 
 

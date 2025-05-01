@@ -1,6 +1,9 @@
 Option Explicit
 
-Dim shell, args
+Dim appTitle, shell, args
+
+appTitle = "Node DDNS Cloudflare"
+
 Set shell = CreateObject("WScript.Shell")
 
 Function CommandExists(cmd)
@@ -18,7 +21,7 @@ End Function
 
 If Not CommandExists("node") Then
  MsgBox "Error: Node.js is not found in PATH." & vbCrLf & _
-  "Please make sure Node.js is installed and added to the PATH variable.", vbCritical
+  "Please make sure Node.js is installed and added to the PATH variable.", vbCritical, appTitle
  WScript.Quit 1
 End If
 
@@ -34,7 +37,7 @@ On Error Resume Next
 shell.Run "cmd /c node ." & args, 0, False
 If Err.Number <> 0 Then
  MsgBox "Error: Failed to launch Node.js." & vbCrLf & _
-  "Details: " & Err.Description, vbCritical
+  "Details: " & Err.Description, vbCritical, appTitle
  WScript.Quit 1
 End If
 On Error GoTo 0
