@@ -2,17 +2,33 @@ import { createSocket } from 'node:dgram'
 import { isIP } from 'node:net'
 
 export async function getDescriptionURL(localIP, {
- timeout = 5000,
  retries = 0,
+ timeout = 3000,
+ maxResponseDelay = 1000,
 } = {}) {
  if (isIP(localIP) !== 4) throw new Error(
   `localIP must be a valid IPv4 address`
  )
- if (typeof timeout !== 'number' || timeout < 1000 || timeout > 60000) throw new TypeError(
-  `timeout must be a number between 1000 and 60000 ms`
+ if (typeof retries !== 'number' || retries % 1 !== 0) throw new TypeError(
+  `retries must be a whole number (integer)`
  )
- if (typeof retries !== 'number' || retries < 0) throw new TypeError(
-  `retries must be a positive number`
+ if (retries < 0) throw new RangeError(
+  `retries cannot be less than 0`
+ )
+ if (typeof timeout !== 'number' || timeout % 1 !== 0) throw new TypeError(
+  `timeout must be a whole number (integer)`
+ )
+ if (timeout <= 1000) throw new RangeError(
+  `timeout must be greater than 1000`
+ )
+ if (typeof maxResponseDelay !== 'number' || maxResponseDelay % 1 !== 0) throw new TypeError(
+  `maxResponseDelay must be a whole number (integer)`
+ )
+ if (maxResponseDelay < 1000) throw new RangeError(
+  `maxResponseDelay cannot be less than 1000 ms (1 second) according to UPnP specification (ISO/IEC 29341-3-1)`
+ )
+ if (timeout <= maxResponseDelay) throw new RangeError(
+  `timeout cannot be less than or equal to maxResponseDelay`
  )
  const { promise, resolve, reject } = Promise.withResolvers()
  const ssdpAddress = '239.255.255.250'
@@ -21,7 +37,7 @@ export async function getDescriptionURL(localIP, {
   'M-SEARCH * HTTP/1.1',
   `HOST: ${ssdpAddress}:${ssdpPort}`,
   'MAN: "ssdp:discover"',
-  'MX: 3',
+  `MX: ${Math.max(1, Math.floor(maxResponseDelay / 1000))}`,
   'ST: urn:schemas-upnp-org:device:InternetGatewayDevice:1',
   'USER-AGENT: DDNS/1.0 UPnP/1.1',
   '',
